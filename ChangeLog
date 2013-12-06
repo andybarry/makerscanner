@@ -1,0 +1,7 @@
+0.3.1 (Sept. 18 2010): Minor bug fix release.  Fixes a number of crashes and adds the ability to switch which camera is used.  Also now saves location of last scan for easier file-system navigation.
+
+0.3 (Summer 2010): Removed requirement for USB-based laser movement.  Added on-screen feedback for where the laser appears.  Substantially improved vibration and movement robustness.
+
+0.2 (Fall 2009): Substantial improvement in accuracy by moving from a calibration-only method to a reference-pixel method.  Enabled .ply output.
+
+0.1 (Fall 2008): Original version.

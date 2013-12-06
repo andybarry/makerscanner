@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ActiveStereo" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ActiveStereo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ActiveStereo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`wx-config --cflags`" />
+			<Add directory="/usr/include/opencv/" />
+		</Compiler>
+		<Linker>
+			<Add option="`wx-config --libs`" />
+			<Add library="/usr/lib/libcv.so" />
+			<Add library="/usr/lib/libcxcore.so" />
+			<Add library="/usr/lib/libhighgui.so" />
+			<Add library="/usr/lib/libcvaux.so" />
+		</Linker>
+		<Unit filename="ActiveStereoApp.cpp" />
+		<Unit filename="ActiveStereoApp.h" />
+		<Unit filename="ActiveStereoMain.cpp" />
+		<Unit filename="ActiveStereoMain.h" />
+		<Unit filename="Cameras.cpp" />
+		<Unit filename="Cameras.h" />
+		<Unit filename="CaptureThread.cpp" />
+		<Unit filename="CaptureThread.h" />
+		<Unit filename="DistanceToReferenceDialog.cpp" />
+		<Unit filename="DistanceToReferenceDialog.h" />
+		<Unit filename="IndividualPixels.h" />
+		<Unit filename="PointCloud.cpp" />
+		<Unit filename="PointCloud.h" />
+		<Unit filename="PointCloudPoint.cpp" />
+		<Unit filename="PointCloudPoint.h" />
+		<Unit filename="ScanStatus.cpp" />
+		<Unit filename="ScanStatus.h" />
+		<Unit filename="ScanThread.cpp" />
+		<Unit filename="ScanThread.h" />
+		<Unit filename="camview.cpp" />
+		<Unit filename="camview.h" />
+		<Unit filename="wxsmith/ActiveStereoframe.wxs" />
+		<Unit filename="wxsmith/DistanceToReferenceDialog.wxs" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<lib_finder disable_auto="1" />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="ActiveStereoApp.cpp" main="ActiveStereoFrame" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxFrame wxs="wxsmith/ActiveStereoframe.wxs" src="ActiveStereoMain.cpp" hdr="ActiveStereoMain.h" name="ActiveStereoFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/DistanceToReferenceDialog.wxs" src="DistanceToReferenceDialog.cpp" hdr="DistanceToReferenceDialog.h" name="DistanceToReferenceDialog" language="CPP" />
+				</resources>
+			</wxsmith>
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

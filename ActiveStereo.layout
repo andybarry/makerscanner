@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="ActiveStereoApp.cpp" open="0" top="0" tabpos="13">
+		<Cursor position="38" topLine="0" />
+	</File>
+	<File name="ActiveStereoApp.h" open="0" top="0" tabpos="2">
+		<Cursor position="293" topLine="0" />
+	</File>
+	<File name="ActiveStereoMain.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="11762" topLine="185" />
+	</File>
+	<File name="ActiveStereoMain.h" open="1" top="0" tabpos="1">
+		<Cursor position="1135" topLine="21" />
+	</File>
+	<File name="Cameras.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="935" topLine="7" />
+	</File>
+	<File name="Cameras.h" open="1" top="0" tabpos="4">
+		<Cursor position="2718" topLine="77" />
+	</File>
+	<File name="CaptureThread.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="1422" topLine="66" />
+	</File>
+	<File name="CaptureThread.h" open="0" top="0" tabpos="6">
+		<Cursor position="853" topLine="30" />
+	</File>
+	<File name="DistanceToReferenceDialog.h" open="0" top="0" tabpos="0">
+		<Cursor position="1658" topLine="45" />
+	</File>
+	<File name="IndividualPixels.h" open="0" top="0" tabpos="6">
+		<Cursor position="293" topLine="48" />
+	</File>
+	<File name="PointCloud.cpp" open="1" top="1" tabpos="9">
+		<Cursor position="2204" topLine="119" />
+	</File>
+	<File name="PointCloud.h" open="0" top="0" tabpos="7">
+		<Cursor position="293" topLine="0" />
+	</File>
+	<File name="PointCloudPoint.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="1168" topLine="31" />
+	</File>
+	<File name="PointCloudPoint.h" open="0" top="0" tabpos="1">
+		<Cursor position="293" topLine="4" />
+	</File>
+	<File name="ScanThread.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="10655" topLine="390" />
+	</File>
+	<File name="ScanThread.h" open="1" top="0" tabpos="2">
+		<Cursor position="3664" topLine="107" />
+	</File>
+	<File name="camview.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="4065" topLine="141" />
+	</File>
+	<File name="camview.h" open="0" top="0" tabpos="4">
+		<Cursor position="245" topLine="0" />
+	</File>
+	<File name="wxsmith/ActiveStereoframe.wxs" open="0" top="0" tabpos="14">
+		<Cursor position="101" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
