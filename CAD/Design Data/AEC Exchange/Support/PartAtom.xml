@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom"
+	  xmlns:A="urn:schemas-autodesk-com:partatom">
+	<id/>	
+	<link rel="design-3d" type="application/dwg" href=".">
+		<A:design-file>
+			<A:title/>
+			<A:product>Inventor</A:product>
+			<A:product-version/>
+			<A:updated/>
+		</A:design-file>
+	</link>	
+	<category>
+		<term/>
+		<label/>
+		<schema>std:oc1</schema>
+	</category>
+	<title/>	
+	<updated/>
+
+	<A:part type="user">
+		<A:title/>
+		<A:partno rel="user"/>
+		<width display="Width" unit="cm"/>
+		<length display="Length" unit="cm"/>
+		<height display="Height" unit="cm"/>
+	</A:part>
+</entry>
