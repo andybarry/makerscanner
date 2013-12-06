@@ -1,4 +1,0 @@
-makerscanner
-============
-
-Makerscanner Software
