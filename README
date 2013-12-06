@@ -1,1 +1,17 @@
-See http://www.makerscanner.com/ and/or http://wiki.makerbot.com/makerscanner for instructions.
+See http://www.makerscanner.com/ for instructions most instructions.
+
+
+To build from source on Linux:
+
+sudo apt-get install libwxgtk2.8-dev
+(or equivalent for your system)
+
+autoscan
+autoheader
+aclocal
+autoconf
+automake -a
+./configure
+make
+sudo make install
+
