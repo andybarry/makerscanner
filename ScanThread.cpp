@@ -299,11 +299,11 @@ vector<float>* ScanThread::FindLaser2(IplImage *withLaser)
 float ScanThread::FindBrightestPointInRow(BwImage subPx, int row, int rowWidth)
 {
 	//Interpolation mode flag
-	//0: Off - use average position of brightest pixels
+	//0: Off - use average position of brightest pixels (default)
 	//1: Max of graph
 	//2: Average position of x's where y=ymax/2
 	//3: Intersection of straight lines derived from edges of laser
-	int INTER_MODE = 3;
+	int INTER_MODE = 0;
 	
 	// init values we will use
 	int laserSum, laserNum, laserCenter, maxPx, maxPxVal;
