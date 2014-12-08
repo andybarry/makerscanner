@@ -17,3 +17,4 @@ autom4te.cache
 autoscan.log
 stamp-h1
 Makefile.in
+compile
