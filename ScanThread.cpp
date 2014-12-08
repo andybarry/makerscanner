@@ -22,6 +22,9 @@ using namespace std;
 
 #include <wx/arrimpl.cpp> // this is a magic incantation which must be done! (that's straight from the docs, by the way)
 
+#include <gsl/gsl_errno.h> // required for interpolation
+#include <gsl/gsl_spline.h>
+
 #define PIXELS_PER_CM_PER_CM 519 //564.4 // for the logitech camera, divide this number by the distance from the object to get pixels per cm at that location
 #define LASER_FLAT_FORWARD_PRE_MOVE 100
 #define LASER_FLAT_FORWARD 124
@@ -263,16 +266,18 @@ vector<float>* ScanThread::FindLaser2(IplImage *withLaser)
 	brightAverage = brightSum / 25.0;
 
 	int bestPx;
+	float bestSubPx;
 
 	// for loop that loops through every row in the image
 	for (int h = 25; h < sz.height; h++)
 	{
-		bestPx = FindBrightestPointInRow(subPx, h, sz.width);
+		bestSubPx = FindBrightestPointInRow(subPx, h, sz.width); //Get subpixel location
+		bestPx = int(bestSubPx + 0.5); //Use brightness of closest actual pixel for filtering purposes
 
 		// filter out points that don't show high brightness because they are probably noise
 		if (float(bwWithLaserPx[h][bestPx]) > brightnessThreshold * brightAverage)
 		{
-			(*pxLocations)[h] = bestPx;
+			(*pxLocations)[h] = bestSubPx;
 		} else {
 			(*pxLocations)[h] = -1;
 		}
@@ -293,6 +298,13 @@ vector<float>* ScanThread::FindLaser2(IplImage *withLaser)
 
 float ScanThread::FindBrightestPointInRow(BwImage subPx, int row, int rowWidth)
 {
+	//Interpolation mode flag
+	//0: Off - use average position of brightest pixels (default)
+	//1: Max of graph
+	//2: Average position of x's where y=ymax/2
+	//3: Intersection of straight lines derived from edges of laser
+	int INTER_MODE = 0;
+	
 	// init values we will use
 	int laserSum, laserNum, laserCenter, maxPx, maxPxVal;
 
@@ -330,9 +342,6 @@ float ScanThread::FindBrightestPointInRow(BwImage subPx, int row, int rowWidth)
 
 	// we are done with this row -- select the most likely point.
 
-	// TODO: subpixel interpolation
-
-
 	if (maxPx >= 0)
 	{
 		// compute the center point of the laser
@@ -341,6 +350,153 @@ float ScanThread::FindBrightestPointInRow(BwImage subPx, int row, int rowWidth)
 		// no value for this row
 		laserCenter = 0;
 	}
+		
+	//If mode 0, done
+	if ( INTER_MODE == 0 ) return laserCenter;
+	
+	//Interpolation 1 =====
+	int interpRange = 30;	//Number of pixels left and right of current laser centre to use for interpolation
+	if ( !(maxPx >= 0 && laserCenter > interpRange && rowWidth - laserCenter > interpRange) )
+	{
+		//Not enough data for interpolation
+		return laserCenter;
+	}
+	
+	//Fill array with x, y values to pass to build graph from
+	int i;
+	double xi, yi, x[interpRange*2], y[interpRange*2];
+
+	for (i = 0; i < 2*interpRange; i++)
+	{
+		x[i] = laserCenter-interpRange+i;
+		y[i] = subPx[h][laserCenter-interpRange+i];
+	}
+
+	//Create graph
+	gsl_interp_accel *acc = gsl_interp_accel_alloc ();
+   	gsl_spline *spline = gsl_spline_alloc (gsl_interp_cspline, interpRange*2);
+
+	gsl_spline_init (spline, x, y, interpRange*2);
+
+	double xMax = 0, yMax = 0, yMin = 0;
+
+	//Find max brightness
+    for (xi = x[0]; xi < x[interpRange*2-1]; xi += 0.01)
+	{
+		yi = gsl_spline_eval (spline, xi, acc);
+		if (yi > yMax)
+		{
+			yMax = yi;
+			xMax = xi;
+		}
+		if (yi < yMin) yMin = yi;
+	}
+	
+	laserCenter = xMax;
+	
+	//If mode 1, done
+	if ( INTER_MODE == 1 )
+	{
+		//Release gsl objects
+		gsl_spline_free (spline);
+		gsl_interp_accel_free (acc);
+		return laserCenter;
+	}
+	
+	//Interpolation 2 =====
+	
+	//Find 2 points with same y value on curve, average x values to use as pixel
+
+	double errorTolerance = 2;
+	double x1 = -1, x2 = -1;
+	double targetY = (yMax + yMin) / 2; //y value to find x values for
+	
+	//Walk graph left until targetY is found
+	yi = yMax;
+	xi = xMax;
+	while ( abs( yi - targetY ) > errorTolerance && xi > x[1] )
+	{
+		xi -= 0.01;
+		yi = gsl_spline_eval (spline, xi, acc);
+	}
+	if ( xi == x[1] ) //Invalid
+	{
+		//Release gsl objects
+		gsl_spline_free (spline);
+		gsl_interp_accel_free (acc);
+		return laserCenter;
+	}
+	
+	x1 = xi;
+	
+	//Walk graph right until targetY is found
+	yi = yMax;
+	xi = xMax;
+	while ( abs( yi - targetY ) > errorTolerance && xi < x[interpRange*2-2] )
+	{
+		xi += 0.01;
+		yi = gsl_spline_eval (spline, xi, acc);
+	}
+	if ( xi == x[interpRange*2-2] ) return laserCenter;
+	
+	x2 = xi;
+	
+	if ( x2 < 0 ) //Invalid
+	{
+		//Release gsl objects
+		gsl_spline_free (spline);
+		gsl_interp_accel_free (acc);
+		return laserCenter;
+	}
+	laserCenter = ( x1 + x2 ) / 2;
+	
+	//If mode 2, done
+	if ( INTER_MODE == 2 )
+	{
+		//Release gsl objects
+		gsl_spline_free (spline);
+		gsl_interp_accel_free (acc);
+		return laserCenter;
+	}
+	
+	//Interpolation 3 =====
+	double offset = 5;
+	if ( x1 - offset < x[0] || x2 + offset > x[interpRange*2-1] ) //Invalid
+	{
+		//Release gsl objects
+		gsl_spline_free (spline);
+		gsl_interp_accel_free (acc);
+		return laserCenter;
+	}
+	
+	//Find straight lines of the edges of the laser curve, use point of intersection as pixel
+	
+	//Pick 2 points on each side to calculate lines a & b
+	double x1a = x1 - offset;
+	double x1b = x1 + offset;
+	double x2a = x2 - offset;
+	double x2b = x2 + offset;
+	double y1a = gsl_spline_eval (spline, x1a, acc);
+	double y1b = gsl_spline_eval (spline, x1b, acc);
+	double y2a = gsl_spline_eval (spline, x2a, acc);
+	double y2b = gsl_spline_eval (spline, x2b, acc);
+	
+	//Find line equations
+	double m1 = ( y1b - y1a ) / ( x1b - x1a );
+	double m2 = ( y2b - y2a ) / ( x2b - x2a );
+	
+	double c1 = y1a - m1 * x1a;
+	double c2 = y2a - m2 * x2a;
+	
+	//Find intersection
+	double intersection_X = (c2 - c1) / (m1 - m2);
+	//Only update if value is within valid range
+	if ( intersection_X >= 0 && intersection_X < rowWidth ) laserCenter = intersection_X;
+	
+	//Release gsl objects
+	gsl_spline_free (spline);
+	gsl_interp_accel_free (acc);
+		
 	return laserCenter;
 }
 
@@ -385,7 +541,7 @@ void ScanThread::AddPointcloudPoints(vector<float> *laserPos)
 			if (pxDist < 0)
 			{
 				// not a valid point
-				return;
+				continue; //Ignore this point, keep processing the rest
 			}
 
 
@@ -511,7 +667,7 @@ float ScanThread::GetReferenceLaserLocation(vector<float> *laserCenterPx)
 		// we probably don't have a good idea where the laser is
 		if (DEBUG_ON == 1)
 		{
-			DisplayText(wxT("\nWanring: failed to find reference laser."));
+			DisplayText(wxT("\nWarning: failed to find reference laser."));
 		}
 
 		return -1;
