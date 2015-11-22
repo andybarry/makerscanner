@@ -1,0 +1,17 @@
+*.o
+configure
+config.h*
+configure.scan
+install-sh
+makerscanner
+missing
+stamp-h1
+aclocal.m4
+.deps/
+Makefile
+autom4te.cache
+autoscan.log
+compile
+config.log
+config.status
+depcomp

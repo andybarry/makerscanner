@@ -23,9 +23,9 @@ DEFINE_EVENT_TYPE(IMAGE_UPDATE_EVENT)
 
 CaptureThread::CaptureThread(wxFrame *windowIn, CvCapture *captureIn) : wxThread(wxTHREAD_JOINABLE)
 {
-	capturing = IDLE;
-	window = windowIn;
-	cvCapture = captureIn;
+    capturing = IDLE;
+    window = windowIn;
+    cvCapture = captureIn;
 }
 
 // called on thread quit -- free all memory
@@ -37,73 +37,73 @@ void CaptureThread::OnExit()
 // Called when thread is started
 void* CaptureThread::Entry()
 {
-	while (true)
-	{
-		// check to see if the thread should exit
-		if (TestDestroy() == true)
-		{
-		    break;
-		}
+    while (true)
+    {
+        // check to see if the thread should exit
+        if (TestDestroy() == true)
+        {
+            break;
+        }
 
-		if (capturing == CAPTURE)
-		{
-			// get a new image
-			CaptureFrame();
-		} else if (capturing == PREVIEW)
-		{
+        if (capturing == CAPTURE)
+        {
+            // get a new image
+            CaptureFrame();
+        } else if (capturing == PREVIEW)
+        {
 
-			// get a new image and show it on screen
-			CaptureFrame();
-			SendFrame(imageQueue.back());
-		} else if (capturing == IDLE)
-		{
-			Sleep(10);
-		} else if (capturing == STOP)
-		{
-		    break;
-		}
+            // get a new image and show it on screen
+            CaptureFrame();
+            SendFrame(imageQueue.back());
+        } else if (capturing == IDLE)
+        {
+            Sleep(10);
+        } else if (capturing == STOP)
+        {
+            break;
+        }
 
-		Yield();
-	}
+        Yield();
+    }
 
-	return NULL;
+    return NULL;
 }
 
 void CaptureThread::CaptureFrame()
 {
-	if (!cvCapture){
-		//fail
-		return;
-	}
+    if (!cvCapture){
+        //fail
+        return;
+    }
 
-	if (imageQueue.size() > 100)
-	{
-		// stack too big, throw out some data
-		imageQueue.pop();
-	}
+    if (imageQueue.size() > 100)
+    {
+        // stack too big, throw out some data
+        imageQueue.pop();
+    }
 
-	for (int i=0; i < 1; i++) cvGrabFrame(cvCapture); // it takes a few images to get to the newest one
-	IplImage* lastFrame = cvRetrieveFrame(cvCapture);
-	// cvShowImage("My Camera", LastFrame);
-	imageQueue.push(lastFrame);
+    for (int i=0; i < 1; i++) cvGrabFrame(cvCapture); // it takes a few images to get to the newest one
+    IplImage* lastFrame = cvRetrieveFrame(cvCapture);
+    // cvShowImage("My Camera", LastFrame);
+    imageQueue.push(lastFrame);
 
 }
 
 IplImage* CaptureThread::Pop()
 {
-	if (imageQueue.size() <= 0)
-	{
-		CaptureFrame();
-	}
+    if (imageQueue.size() <= 0)
+    {
+        CaptureFrame();
+    }
 
-	IplImage *image = imageQueue.front();
+    IplImage *image = imageQueue.front();
 
-	if (imageQueue.size() > 1)
-	{
-		imageQueue.pop();
-	}
+    if (imageQueue.size() > 1)
+    {
+        imageQueue.pop();
+    }
 
-	return image;
+    return image;
 }
 
 /*
@@ -112,19 +112,19 @@ IplImage* CaptureThread::Pop()
 */
 void CaptureThread::Flush()
 {
-	CaptureStatus oldCap = capturing;
+    CaptureStatus oldCap = capturing;
 
-	capturing = IDLE;
+    capturing = IDLE;
 
-	while (imageQueue.size() > 0)
-	{
-		imageQueue.pop();
+    while (imageQueue.size() > 0)
+    {
+        imageQueue.pop();
 
-		// since you should never release an image gotten by cvRetrieveFrame,
-		// we don't need to release images here.
-	}
+        // since you should never release an image gotten by cvRetrieveFrame,
+        // we don't need to release images here.
+    }
 
-	capturing = oldCap;
+    capturing = oldCap;
 }
 
 // Display the given image on the frame
@@ -136,35 +136,35 @@ void CaptureThread::SendFrame(IplImage *frame)
         return;
     }
 
-	IplImage* pDstImg;
-	CvSize sz = cvSize(frame->width, frame->height);
-	pDstImg = cvCreateImage(sz, 8, 3);
-	cvZero(pDstImg);
-	// convert the image into a 3 channel image for display on the frame
-	if (frame->nChannels == 1)
-	{
-		//cvCvtColor(frame, pDstImg, CV_GRAY2BGR);
+    IplImage* pDstImg;
+    CvSize sz = cvSize(frame->width, frame->height);
+    pDstImg = cvCreateImage(sz, 8, 3);
+    cvZero(pDstImg);
+    // convert the image into a 3 channel image for display on the frame
+    if (frame->nChannels == 1)
+    {
+        //cvCvtColor(frame, pDstImg, CV_GRAY2BGR);
 
-		// another way to convert grayscale to RGB
-		cvMerge(frame, frame, frame, NULL, pDstImg);
-	} else if (frame->nChannels == 3){
+        // another way to convert grayscale to RGB
+        cvMerge(frame, frame, frame, NULL, pDstImg);
+    } else if (frame->nChannels == 3){
 
-		// opencv stores images as BGR instead of RGB so we need to convert
-		cvConvertImage(frame, pDstImg, CV_CVTIMG_SWAP_RB);
+        // opencv stores images as BGR instead of RGB so we need to convert
+        cvConvertImage(frame, pDstImg, CV_CVTIMG_SWAP_RB);
 
-	} else {
-		// we don't know how to display this image based on its number of channels
+    } else {
+        // we don't know how to display this image based on its number of channels
 
-		// give up
-		cvReleaseImage( &pDstImg );
-		return;
-	}
+        // give up
+        cvReleaseImage( &pDstImg );
+        return;
+    }
 
-	wxCommandEvent event(IMAGE_UPDATE_EVENT, GetId());
+    wxCommandEvent event(IMAGE_UPDATE_EVENT, GetId());
 
-	// send the image in the event
-	event.SetClientData(pDstImg);
+    // send the image in the event
+    event.SetClientData(pDstImg);
 
-	// Send the event to the frame!
-	window->AddPendingEvent(event);
+    // Send the event to the frame!
+    window->GetEventHandler()->AddPendingEvent(event);
 }
