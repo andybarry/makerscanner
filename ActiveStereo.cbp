@@ -37,14 +37,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="`wx-config --cflags`" />
+			<Add option='-DPIXMAPS_DIR=&quot;&quot;' />
 			<Add directory="/usr/include/opencv/" />
 		</Compiler>
 		<Linker>
 			<Add option="`wx-config --libs`" />
-			<Add library="/usr/lib/libcv.so" />
-			<Add library="/usr/lib/libcxcore.so" />
-			<Add library="/usr/lib/libhighgui.so" />
-			<Add library="/usr/lib/libcvaux.so" />
+			<Add option="`pkg-config --libs opencv`" />
 		</Linker>
 		<Unit filename="ActiveStereoApp.cpp" />
 		<Unit filename="ActiveStereoApp.h" />
@@ -76,8 +74,8 @@
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="ActiveStereoApp.cpp" main="ActiveStereoFrame" init_handlers="necessary" language="CPP" />
 				<resources>
-					<wxFrame wxs="wxsmith/ActiveStereoframe.wxs" src="ActiveStereoMain.cpp" hdr="ActiveStereoMain.h" name="ActiveStereoFrame" language="CPP" />
-					<wxDialog wxs="wxsmith/DistanceToReferenceDialog.wxs" src="DistanceToReferenceDialog.cpp" hdr="DistanceToReferenceDialog.h" name="DistanceToReferenceDialog" language="CPP" />
+					<wxFrame wxs="wxsmith/ActiveStereoframe.wxs" src="ActiveStereoMain.cpp" hdr="ActiveStereoMain.h" fwddecl="0" i18n="1" name="ActiveStereoFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/DistanceToReferenceDialog.wxs" src="DistanceToReferenceDialog.cpp" hdr="DistanceToReferenceDialog.h" fwddecl="0" i18n="1" name="DistanceToReferenceDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 			<debugger />

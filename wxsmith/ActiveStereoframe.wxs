@@ -106,7 +106,6 @@
 												<object class="sizeritem">
 													<object class="wxSlider" name="ID_SLIDER1" variable="sliderBrightnessFilter" member="yes">
 														<value>80</value>
-														<min>0</min>
 														<size>158,35</size>
 														<handler function="OnSliderBrightnessFilterCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_THUMBTRACK" />
 														<handler function="OnSliderBrightnessFilterCmdScrollThumbTrack" entry="EVT_COMMAND_SCROLL_CHANGED" />
