@@ -18,3 +18,5 @@ autoscan.log
 stamp-h1
 Makefile.in
 compile
+bin
+gmon.out

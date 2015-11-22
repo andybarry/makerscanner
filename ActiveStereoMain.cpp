@@ -244,6 +244,8 @@ ActiveStereoFrame::ActiveStereoFrame(wxWindow* parent,wxWindowID id)
 
 	framesSinceLastFpsUpdate = 0;
 
+	timeOfLastFpsUpdate = wxDateTime::UNow();
+
 	//cvNamedWindow( "win1", CV_WINDOW_AUTOSIZE );
 }
 
@@ -552,4 +554,5 @@ void ActiveStereoFrame::UpdateFps(wxUpdateUIEvent &event)
             butCapture->Enable(false);
         }
 	}
+
 }
