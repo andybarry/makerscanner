@@ -2,6 +2,7 @@
 *~
 *.layout
 *.depend
+.objs/
 .deps/
 config.h
 config.h.in
