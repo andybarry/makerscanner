@@ -7,40 +7,29 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Debug\MakerScanner" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="bin/Debug/MakerScanner" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="$(#wx)\lib\gcc_lib\mswu" />
+					<Add directory="$(#wx)/lib/gcc_lib/mswu" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="$(#wx)\lib\gcc_lib\mswu" />
+					<Add directory="$(#wx)/lib/gcc_lib/mswu" />
 				</ResourceCompiler>
 				<Linker>
-					<Add library="libwxmsw28u_richtext.a" />
-					<Add library="libwxmsw28u_xrc.a" />
-					<Add library="libwxmsw28u_aui.a" />
-					<Add library="libwxmsw28u_dbgrid.a" />
-					<Add library="libwxbase28u_odbc.a" />
-					<Add library="libwxmsw28u_media.a" />
-					<Add library="libwxbase28u_net.a" />
-					<Add library="libwxmsw28u_gl.a" />
-					<Add library="libwxmsw28u_qa.a" />
-					<Add library="libwxbase28u_xml.a" />
-					<Add library="libwxmsw28u_adv.a" />
-					<Add library="libwxmsw28u_html.a" />
-					<Add library="libwxmsw28u_core.a" />
-					<Add library="libwxbase28u.a" />
-					<Add library="libwxpng.a" />
-					<Add library="libwxjpeg.a" />
-					<Add library="libwxtiff.a" />
-					<Add library="libwxzlib.a" />
-					<Add library="libwxregexu.a" />
-					<Add library="libwxexpat.a" />
-					<Add directory="$(#wx)\lib\gcc_lib" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxexpat.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxjpeg.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_gl.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxpng.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxregexu.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxscintilla.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxtiff.a" />
+					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxzlib.a" />
+					<Add directory="$(#wx)/lib/gcc_lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -52,16 +41,40 @@
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
-			<Add directory="$(#wx)\include" />
-			<Add directory="$(#wx)\contrib\include" />
-			<Add directory="C:\OpenCV2.1\include\opencv" />
-			<Add directory="C:\OpenCV2.1\include" />
+			<Add directory="$(#wx)/include" />
+			<Add directory="$(#wx)/contrib/include" />
+			<Add directory="$(#wx)/lib/gcc_dll/mswu" />
+			<Add directory="../../opencv/build/x64/mingw/install/include" />
+			<Add directory="../../opencv/build/x64/mingw/install/include/opencv" />
 		</Compiler>
 		<ResourceCompiler>
-			<Add directory="$(#wx)\include" />
+			<Add directory="$(#wx)/include" />
 		</ResourceCompiler>
 		<Linker>
 			<Add option="-mthreads" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_superres310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_video310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_videostab310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_videoio310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_imgcodecs310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_imgproc310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_core310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_highgui310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_ml310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_ts310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_calib3d310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_features2d310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_flann310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_objdetect310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_photo310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_shape310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_stitching310.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libzlib.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibjasper.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibjpeg.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibpng.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibtiff.a" />
+			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibwebp.a" />
 			<Add library="libkernel32.a" />
 			<Add library="libuser32.a" />
 			<Add library="libgdi32.a" />
@@ -75,13 +88,8 @@
 			<Add library="libcomctl32.a" />
 			<Add library="libwsock32.a" />
 			<Add library="libodbc32.a" />
-			<Add library="C:\OpenCV2.1\lib\cv210.lib" />
-			<Add library="C:\OpenCV2.1\lib\cvaux210.lib" />
-			<Add library="C:\OpenCV2.1\lib\cxcore210.lib" />
-			<Add library="C:\OpenCV2.1\lib\cxts210.lib" />
-			<Add library="C:\OpenCV2.1\lib\highgui210.lib" />
-			<Add library="C:\OpenCV2.1\lib\ml210.lib" />
-			<Add directory="C:\OpenCV2.1\lib" />
+			<Add library="libvfw32.a" />
+			<Add directory="C:/OpenCV2.1/lib" />
 		</Linker>
 		<Unit filename="ActiveStereoApp.cpp" />
 		<Unit filename="ActiveStereoApp.h" />
@@ -113,9 +121,10 @@
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="ActiveStereoApp.cpp" main="" init_handlers="necessary" language="CPP" />
 				<resources>
-					<wxDialog wxs="wxsmith/wxtest6dialog.wxs" src="wxtest6Main.cpp" hdr="wxtest6Main.h" name="wxtest6Dialog" language="CPP" />
+					<wxDialog wxs="wxsmith/wxtest6dialog.wxs" src="wxtest6Main.cpp" hdr="wxtest6Main.h" fwddecl="0" i18n="1" name="wxtest6Dialog" language="CPP" />
 				</resources>
 			</wxsmith>
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
