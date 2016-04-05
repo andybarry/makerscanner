@@ -1,5 +1,6 @@
 *.o
 *~
+*.layout
 *.depend
 .deps/
 config.h
