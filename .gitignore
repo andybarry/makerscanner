@@ -1,5 +1,6 @@
 *.o
 *~
+*.depend
 .deps/
 config.h
 config.h.in
@@ -19,4 +20,5 @@ stamp-h1
 Makefile.in
 compile
 bin
+obj
 gmon.out
