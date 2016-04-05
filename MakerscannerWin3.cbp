@@ -13,35 +13,38 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
+					<Add option="-m64" />
 					<Add option="-g" />
-					<Add directory="$(#wx)/lib/gcc_lib/mswu" />
+					<Add option="-std=gnu++11" />
+					<Add directory="$(#wx)/lib/gcc_lib64/mswu" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(#wx)/lib/gcc_lib/mswu" />
 				</ResourceCompiler>
 				<Linker>
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxbase31u.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxbase31u_net.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxbase31u_xml.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxexpat.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxjpeg.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_adv.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_aui.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_core.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_gl.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_html.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_media.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_propgrid.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_ribbon.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_richtext.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_stc.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_webview.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxmsw31u_xrc.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxpng.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxregexu.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxscintilla.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxtiff.a" />
-					<Add library="../../wxWidgets-3.1.0/lib/gcc_dll/libwxzlib.a" />
+					<Add option="-m64" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_media.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxtiff.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxjpeg.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxregexu.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxscintilla.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxzlib.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxexpat.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_webview.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_html.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_adv.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_aui.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_core.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_gl.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_propgrid.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_ribbon.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_richtext.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_stc.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxmsw30u_xrc.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxbase30u_net.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxbase30u_xml.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxbase30u.a" />
+					<Add library="../../wxWidgets-3.0.2/lib/gcc_lib64/libwxpng.a" />
 					<Add directory="$(#wx)/lib/gcc_lib" />
 				</Linker>
 			</Target>
@@ -56,7 +59,7 @@
 			<Add option="-DwxUSE_UNICODE" />
 			<Add directory="$(#wx)/include" />
 			<Add directory="$(#wx)/contrib/include" />
-			<Add directory="$(#wx)/lib/gcc_dll/mswu" />
+			<Add directory="$(#wx)/lib/gcc_lib64/mswu" />
 			<Add directory="../../opencv/build/x64/mingw/install/include" />
 			<Add directory="../../opencv/build/x64/mingw/install/include/opencv" />
 		</Compiler>
