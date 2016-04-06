@@ -4,13 +4,13 @@
 	<Project>
 		<Option title="MakerScanner Win" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="mingw_64-bit_compiler" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/MakerScanner" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="mingw_64-bit_compiler" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-m64" />
@@ -60,37 +60,14 @@
 			<Add directory="$(#wx)/lib/gcc_dll64/mswu" />
 			<Add directory="$(#wx)/include" />
 			<Add directory="$(#wx)/contrib/include" />
-			<Add directory="../../opencv/build/x64/mingw/install/include" />
-			<Add directory="../../opencv/build/x64/mingw/install/include/opencv" />
+			<Add directory="../../opencv/build/install/include" />
+			<Add directory="../../opencv/build/install/include/opencv" />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="$(#wx)/include" />
 		</ResourceCompiler>
 		<Linker>
 			<Add option="-mthreads" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_superres310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_video310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_videostab310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_videoio310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_imgcodecs310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_imgproc310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_core310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_highgui310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_ml310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_ts310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_calib3d310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_features2d310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_flann310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_objdetect310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_photo310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_shape310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libopencv_stitching310.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/libzlib.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibjasper.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibjpeg.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibpng.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibtiff.a" />
-			<Add library="../../opencv/build/x64/mingw/install/x64/mingw/staticlib/liblibwebp.a" />
 			<Add library="libkernel32.a" />
 			<Add library="libuser32.a" />
 			<Add library="libgdi32.a" />
@@ -105,6 +82,23 @@
 			<Add library="libwsock32.a" />
 			<Add library="libodbc32.a" />
 			<Add library="libvfw32.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_calib3d310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_core310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_features2d310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_flann310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_highgui310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_imgcodecs310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_imgproc310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_ml310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_objdetect310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_photo310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_shape310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_stitching310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_superres310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_ts310.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_video310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_videoio310.dll.a" />
+			<Add library="../../opencv/build/install/x64/mingw/lib/libopencv_videostab310.dll.a" />
 			<Add directory="C:/OpenCV2.1/lib" />
 		</Linker>
 		<Unit filename="ActiveStereoApp.cpp" />
