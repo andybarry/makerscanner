@@ -134,7 +134,7 @@ ActiveStereoFrame::ActiveStereoFrame(wxWindow* parent,wxWindowID id)
     lblBrightnessFilter = new wxStaticText(Panel1, ID_STATICTEXT5, _("Brightness Filter: 0.80"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
     FlexGridSizer1->Add(lblBrightnessFilter, 1, wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
     sliderBrightnessFilter = new wxSlider(Panel1, ID_SLIDER1, 80, 0, 100, wxDefaultPosition, wxSize(158,35), 0, wxDefaultValidator, _T("ID_SLIDER1"));
-    FlexGridSizer1->Add(sliderBrightnessFilter, 1, wxALL|wxEXPAND|wxSHAPED|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(sliderBrightnessFilter, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     staticBoxSizerSettings->Add(FlexGridSizer1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     headBoxSizer->Add(staticBoxSizerSettings, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticText2 = new wxStaticText(Panel1, ID_STATICTEXT6, _("Brightness Threshold controls how bright the laser must be in the image for it to be detected.  Low values will be more forgiving of light lasers or dark objects, but tend to produce more noise.\n\nBrightness Filter controls how bright pixels must appear relative to other laser pixels.  Low values are more forgiving but tend to produce more noise."), wxDefaultPosition, wxSize(319,170), 0, _T("ID_STATICTEXT6"));
