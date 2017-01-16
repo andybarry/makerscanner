@@ -80,10 +80,10 @@ BEGIN_EVENT_TABLE(ActiveStereoFrame,wxFrame)
     //*)
 
     EVT_COMMAND(wxID_ANY, IMAGE_UPDATE_EVENT, ActiveStereoFrame::UpdateImage)
-	EVT_COMMAND(wxID_ANY, DISPLAY_TEXT_EVENT, ActiveStereoFrame::DisplayText)
-	EVT_COMMAND(wxID_ANY, WRITE_TO_FILE_EVENT, ActiveStereoFrame::WriteToFile)
-	EVT_COMMAND(wxID_ANY, SCAN_PROGRESS_EVENT, ActiveStereoFrame::UpdateScanProgress)
-	EVT_COMMAND(wxID_ANY, SCAN_FINISHED_EVENT, ActiveStereoFrame::ScanFinished)
+    EVT_COMMAND(wxID_ANY, DISPLAY_TEXT_EVENT, ActiveStereoFrame::DisplayText)
+    EVT_COMMAND(wxID_ANY, WRITE_TO_FILE_EVENT, ActiveStereoFrame::WriteToFile)
+    EVT_COMMAND(wxID_ANY, SCAN_PROGRESS_EVENT, ActiveStereoFrame::UpdateScanProgress)
+    EVT_COMMAND(wxID_ANY, SCAN_FINISHED_EVENT, ActiveStereoFrame::ScanFinished)
 
     EVT_UPDATE_UI(ID_FPS_LABEL, ActiveStereoFrame::UpdateFps)
 
@@ -104,7 +104,7 @@ ActiveStereoFrame::ActiveStereoFrame(wxWindow* parent,wxWindowID id)
     wxMenuBar* MenuBar1;
     wxMenu* Menu2;
 
-    Create(parent, wxID_ANY, _("MakerScanner v0.3.1"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
+    Create(parent, wxID_ANY, _("MakerScanner v0.3.2"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
     SetClientSize(wxSize(1009,746));
     SetMinSize(wxSize(1009,746));
     Panel1 = new wxPanel(this, ID_PANEL1, wxPoint(120,232), wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
@@ -205,48 +205,48 @@ ActiveStereoFrame::ActiveStereoFrame(wxWindow* parent,wxWindowID id)
     #endif
 
     // create image display window on the frame and insert it into the sizer
-	m_pCamView = new CCamView( Panel1, wxPoint(150,0), wxSize(640, 480) );
-	topBoxSizer->Insert(0, m_pCamView, 0, wxFIXED_MINSIZE);
+    m_pCamView = new CCamView( Panel1, wxPoint(150,0), wxSize(640, 480) );
+    topBoxSizer->Insert(0, m_pCamView, 0, wxFIXED_MINSIZE);
 
-	// just added the camera window, so force sizers to reset
-	topBoxSizer->Layout();
-	BoxSizer1->Layout();
+    // just added the camera window, so force sizers to reset
+    topBoxSizer->Layout();
+    BoxSizer1->Layout();
 
-	updateImageRunning = false;
+    updateImageRunning = false;
 
-	// init camera and laser connected variables (used for labels)
-	cameraConnected = false;
+    // init camera and laser connected variables (used for labels)
+    cameraConnected = false;
 
-	// init last USB event time (so we don't overload the PIC with USB events)
-	lastUsbTime = wxDateTime::UNow();
+    // init last USB event time (so we don't overload the PIC with USB events)
+    lastUsbTime = wxDateTime::UNow();
 
-	scanStatus = new ScanStatus();
+    scanStatus = new ScanStatus();
 
-	// read the camera preference out of the config
-	wxConfig *config = new wxConfig(wxT("makerscanner"));
-	config->Set(config);
+    // read the camera preference out of the config
+    wxConfig *config = new wxConfig(wxT("makerscanner"));
+    config->Set(config);
 
-	if (config->Read(wxT("CameraNum"), &cameraNum))
-	{
-	    // read the value successfully
+    if (config->Read(wxT("CameraNum"), &cameraNum))
+    {
+        // read the value successfully
 
-	    // check for the -1 (first camera detected) case
-	    if (cameraNum == -1)
-	    {
-	        cameraNum = CV_CAP_ANY;
-	    }
-	} else {
-	    cameraNum = CV_CAP_ANY;
-	}
+        // check for the -1 (first camera detected) case
+        if (cameraNum == -1)
+        {
+            cameraNum = CV_CAP_ANY;
+        }
+    } else {
+        cameraNum = CV_CAP_ANY;
+    }
 
-	//Start up the camera and look at the image
-	cam = new Cameras(txtLog, this, scanStatus, cameraNum);  // create the camera object
+    //Start up the camera and look at the image
+    cam = new Cameras(txtLog, this, scanStatus, cameraNum);  // create the camera object
 
-	framesSinceLastFpsUpdate = 0;
+    framesSinceLastFpsUpdate = 0;
 
-	timeOfLastFpsUpdate = wxDateTime::UNow();
+    timeOfLastFpsUpdate = wxDateTime::UNow();
 
-	//cvNamedWindow( "win1", CV_WINDOW_AUTOSIZE );
+    //cvNamedWindow( "win1", CV_WINDOW_AUTOSIZE );
 }
 
 // Destructor
@@ -256,21 +256,21 @@ ActiveStereoFrame::~ActiveStereoFrame()
     // you might get a crash on exit in Windows OS (most likley
     // when you have a UpdateImage event after the viewer is gone)
     if (cam)
-	{
+    {
         delete cam;
-	}
-	if (m_pCamView)
-	{
-		delete m_pCamView;
-	}
-	if (scanStatus)
-	{
-		delete scanStatus;
-	}
-	if (config)
-	{
-	    delete config;
-	}
+    }
+    if (m_pCamView)
+    {
+        delete m_pCamView;
+    }
+    if (scanStatus)
+    {
+        delete scanStatus;
+    }
+    if (config)
+    {
+        delete config;
+    }
 }
 
 // On thread destruction
@@ -282,116 +282,116 @@ void ActiveStereoFrame::OnQuit(wxCommandEvent& event)
 // On about, show a dialog with name, email, etc.
 void ActiveStereoFrame::OnAbout(wxCommandEvent& event)
 {
-    wxString msg = wxT("MakerScanner v0.3.1\nhttp://makerscanner.com\n\n(C) 2009-2010\nAndrew Barry\nabarry@gmail.com");
+    wxString msg = wxT("MakerScanner v0.3.2\nhttp://makerscanner.com\n\n(C) 2009-2010\nAndrew Barry\nabarry@gmail.com");
     wxMessageBox(msg, _("MakerScanner"));
 }
 
 // Scan button clicked -- start a new scan!
 void ActiveStereoFrame::OnButCaptureClick(wxCommandEvent& event)
 {
-	wxString directory = wxT("");
+    wxString directory = wxT("");
 
-	// read the last directory used
+    // read the last directory used
     wxConfig *config = (wxConfig*)wxConfigBase::Get();
-	if (config->Read(wxT("ScanDir"), &directory))
-	{
+    if (config->Read(wxT("ScanDir"), &directory))
+    {
         // check for a not valid directory
         if (wxDir::Exists(directory) == false)
         {
             directory = wxT("");
         }
-	} else {
-	    // failed to read config
-	    directory = wxT("");
-	}
-	// ask where to save the point cloud file
-	wxFileDialog dialog(this, wxT("Save pointcloud file"), directory, wxT("pointcloud.ply"), wxT("*.ply"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-	if (dialog.ShowModal() != wxID_OK)
-	{
-		// user clicked cancel
-		return;
-	}
+    } else {
+        // failed to read config
+        directory = wxT("");
+    }
+    // ask where to save the point cloud file
+    wxFileDialog dialog(this, wxT("Save pointcloud file"), directory, wxT("pointcloud.ply"), wxT("*.ply"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+    if (dialog.ShowModal() != wxID_OK)
+    {
+        // user clicked cancel
+        return;
+    }
 
-	// get the filename and path as a string
-	pointcloudFilename = dialog.GetPath();
+    // get the filename and path as a string
+    pointcloudFilename = dialog.GetPath();
 
-	wxFileName dir(pointcloudFilename);
-	if (dir.IsOk() == true)
-	{
+    wxFileName dir(pointcloudFilename);
+    if (dir.IsOk() == true)
+    {
         // save the new selected directory
         config->Write(wxT("ScanDir"), dir.GetPath());
 
-	}
+    }
 
-	// clear the point cloud file
-	wxFFile file(pointcloudFilename, wxT("w"));
-	if (file.IsOpened())
-	{
-		txtLog->AppendText(wxT("\nWriting point cloud file:\n\t"));
-		txtLog->AppendText(pointcloudFilename);
-		file.Close();
-	} else {
-		txtLog->AppendText(wxT("\nPoint cloud file did not open!"));
-		return;
-	}
+    // clear the point cloud file
+    wxFFile file(pointcloudFilename, wxT("w"));
+    if (file.IsOpened())
+    {
+        txtLog->AppendText(wxT("\nWriting point cloud file:\n\t"));
+        txtLog->AppendText(pointcloudFilename);
+        file.Close();
+    } else {
+        txtLog->AppendText(wxT("\nPoint cloud file did not open!"));
+        return;
+    }
 
-	// Disable buttons/sliders during scanning
-	SetGUIStateDuringScan(true);
+    // Disable buttons/sliders during scanning
+    SetGUIStateDuringScan(true);
 
-	if (!cam)
-	{
-		cam = new Cameras(txtLog, this, scanStatus, cameraNum);  // create the camera object if it doesn't already exist
-	}
+    if (!cam)
+    {
+        cam = new Cameras(txtLog, this, scanStatus, cameraNum);  // create the camera object if it doesn't already exist
+    }
 
-	cam->SetThresholdPixelValue(sliderImageThreshold->GetValue());
-	cam->SetBrightnessFilterValue(float(sliderBrightnessFilter->GetValue()) / 100.0);
+    cam->SetThresholdPixelValue(sliderImageThreshold->GetValue());
+    cam->SetBrightnessFilterValue(float(sliderBrightnessFilter->GetValue()) / 100.0);
 
-	// start scanning!
-	cam->StartScan();
-	butDoneScanning->SetFocus();
+    // start scanning!
+    cam->StartScan();
+    butDoneScanning->SetFocus();
 }
 
 // Catch an update image event and display the new image
 void ActiveStereoFrame::UpdateImage(wxCommandEvent &event)
 {
 
-	// image is shipped as a pointer in the event
-	// cast to IplImage (must release once finished)
-	IplImage *img = (IplImage*)event.GetClientData();
+    // image is shipped as a pointer in the event
+    // cast to IplImage (must release once finished)
+    IplImage *img = (IplImage*)event.GetClientData();
 
-	if (updateImageRunning == true)
-	{
-		txtLog->AppendText(wxT("\nUpdate image was already running"));
-		cvReleaseImage(&img);
-		return;
-	}
-	updateImageRunning = true;
+    if (updateImageRunning == true)
+    {
+        txtLog->AppendText(wxT("\nUpdate image was already running"));
+        cvReleaseImage(&img);
+        return;
+    }
+    updateImageRunning = true;
 
-	// camera is connected -- update if it isn't
-	if (cameraConnected != true)
-	{
-		cameraConnected = true;
-		lblCameraConnected->SetLabel(wxT("Connected"));
+    // camera is connected -- update if it isn't
+    if (cameraConnected != true)
+    {
+        cameraConnected = true;
+        lblCameraConnected->SetLabel(wxT("Connected"));
 
-		// reset layouts now that the length of the label in lblCameraConnected has changed
-		flexGridStatus->Layout();
-		staticBoxSizerStatus->Layout();
-		headBoxSizer->Layout();
+        // reset layouts now that the length of the label in lblCameraConnected has changed
+        flexGridStatus->Layout();
+        staticBoxSizerStatus->Layout();
+        headBoxSizer->Layout();
 
-		butCapture->Enable(true);
-		butCapture->SetFocus();
-	}
+        butCapture->Enable(true);
+        butCapture->SetFocus();
+    }
 
-	// update image display
-	m_pCamView->DrawCam(img);
+    // update image display
+    m_pCamView->DrawCam(img);
 
-	// delete the image that was copied for us to display
-	cvReleaseImage(&img);
+    // delete the image that was copied for us to display
+    cvReleaseImage(&img);
 
-	updateImageRunning = false;
+    updateImageRunning = false;
 
-	// update the FPS display
-	framesSinceLastFpsUpdate ++;
+    // update the FPS display
+    framesSinceLastFpsUpdate ++;
 
 
 }
@@ -399,7 +399,7 @@ void ActiveStereoFrame::UpdateImage(wxCommandEvent &event)
 // catch a display text event and append the text to the terminal display
 void ActiveStereoFrame::DisplayText(wxCommandEvent &event)
 {
-	txtLog->AppendText(event.GetString());
+    txtLog->AppendText(event.GetString());
 }
 
 // catch a write to file event
@@ -407,138 +407,138 @@ void ActiveStereoFrame::DisplayText(wxCommandEvent &event)
 // write to the point cloud file
 void ActiveStereoFrame::WriteToFile(wxCommandEvent &event)
 {
-	wxString FilesWritten = wxT("");
-	//static int i = 0;  // monitor how many times we do file writes
-	//if (i==0) txtLog->AppendText(wxT("\nWriting topoint cloud file: "));
-	//i++;
+    wxString FilesWritten = wxT("");
+    //static int i = 0;  // monitor how many times we do file writes
+    //if (i==0) txtLog->AppendText(wxT("\nWriting topoint cloud file: "));
+    //i++;
    //FilesWritten << i << wxT(" ");
- 	wxFFile file(pointcloudFilename, wxT("a"));
-	file.Write(event.GetString());
-	if (file.IsOpened())  txtLog->AppendText(FilesWritten);
-	else txtLog->AppendText(wxT("Point cloud file did not open!"));
-	file.Close();
+    wxFFile file(pointcloudFilename, wxT("a"));
+    file.Write(event.GetString());
+    if (file.IsOpened())  txtLog->AppendText(FilesWritten);
+    else txtLog->AppendText(wxT("Point cloud file did not open!"));
+    file.Close();
 }
 
 // Camera connect button clicked -- attempt to connect to the camera
 void ActiveStereoFrame::OnButCameraConnectClick(wxCommandEvent& event)
 {
-	if (cam)
-	{
-		delete cam;
-	}
-	cam = new Cameras(txtLog, this, scanStatus, cameraNum);  // create the camera object
+    if (cam)
+    {
+        delete cam;
+    }
+    cam = new Cameras(txtLog, this, scanStatus, cameraNum);  // create the camera object
 }
 
 // Set buttons to be enabled/disabled during (or after) a scan
 void ActiveStereoFrame::SetGUIStateDuringScan(bool scanning)
 {
-	bool enable;
-	if (scanning == true)
-	{
-		enable = false;
-		butCapture->SetLabel(wxT("Scanning..."));
+    bool enable;
+    if (scanning == true)
+    {
+        enable = false;
+        butCapture->SetLabel(wxT("Scanning..."));
 
-	} else {
-		enable = true;
-		butCapture->SetLabel(wxT("Start Scan"));
-		butDoneScanning->SetLabel(wxT("Done Scanning"));
-	}
+    } else {
+        enable = true;
+        butCapture->SetLabel(wxT("Start Scan"));
+        butDoneScanning->SetLabel(wxT("Done Scanning"));
+    }
 
-	butCapture->Enable(enable);
-	butDoneScanning->Enable(!enable);
-	sliderImageThreshold->Enable(enable);
-	sliderBrightnessFilter->Enable(enable);
+    butCapture->Enable(enable);
+    butDoneScanning->Enable(!enable);
+    sliderImageThreshold->Enable(enable);
+    sliderBrightnessFilter->Enable(enable);
 
-	butCameraConnect->Enable(enable);
+    butCameraConnect->Enable(enable);
 
-	if (scanning == false)
-	{
-		butCapture->SetFocus();
-	}
+    if (scanning == false)
+    {
+        butCapture->SetFocus();
+    }
 
 }
 
 // Catch an update scan event and move the progress bar
 void ActiveStereoFrame::UpdateScanProgress(wxCommandEvent &event)
 {
-	// nothing here for now
+    // nothing here for now
 }
 
 // Re-enable buttons now that the scan is finished
 void ActiveStereoFrame::ScanFinished(wxCommandEvent &event)
 {
-	SetGUIStateDuringScan(false);
+    SetGUIStateDuringScan(false);
 }
 
 // Done Scanning button event handler
 void ActiveStereoFrame::OnButDoneScanningClick(wxCommandEvent& event)
 {
-	// stop the scan by telling scanStatus to stop scanning.
-	// this will let the scanning thread finish it's current tasks
-	// once done, the thread will send a scan finished event.
-	scanStatus->SetScanning(false);
-	butDoneScanning->SetLabel(wxT("Finishing Scan..."));
-	butDoneScanning->Enable(false);
+    // stop the scan by telling scanStatus to stop scanning.
+    // this will let the scanning thread finish it's current tasks
+    // once done, the thread will send a scan finished event.
+    scanStatus->SetScanning(false);
+    butDoneScanning->SetLabel(wxT("Finishing Scan..."));
+    butDoneScanning->Enable(false);
 }
 
 // Update the image threshold slider label on slider move
 void ActiveStereoFrame::OnSliderImageThresholdCmdScroll(wxScrollEvent& event)
 {
-	// update the label
-	wxString str = wxT("Brightness Threshold: ");
-	str << sliderImageThreshold->GetValue();
-	lblImageThreshold->SetLabel(str);
+    // update the label
+    wxString str = wxT("Brightness Threshold: ");
+    str << sliderImageThreshold->GetValue();
+    lblImageThreshold->SetLabel(str);
 }
 
 void ActiveStereoFrame::OnSliderBrightnessFilterCmdScrollThumbTrack(wxScrollEvent& event)
 {
-	// update the label
-	wxString str = wxT("Brightness Filter: ");
-	wxString numstr;
-	numstr.Printf(wxT("%.2f"), float(sliderBrightnessFilter->GetValue()) / 100.0);
-	lblBrightnessFilter->SetLabel(str + numstr);
+    // update the label
+    wxString str = wxT("Brightness Filter: ");
+    wxString numstr;
+    numstr.Printf(wxT("%.2f"), float(sliderBrightnessFilter->GetValue()) / 100.0);
+    lblBrightnessFilter->SetLabel(str + numstr);
 }
 
 void ActiveStereoFrame::OnMenuChangeCameraSelected(wxCommandEvent& event)
 {
-	// open the camera number dialog
-	wxNumberEntryDialog dialog (this, wxT("Cameras are numbered in the order they are connected in.\n\nSet the value to -1 to select the first valid camera detected."), wxT("New camera number:"), wxT("MakerScanner - Change Camera"), cameraNum, -1, 10);
+    // open the camera number dialog
+    wxNumberEntryDialog dialog (this, wxT("Cameras are numbered in the order they are connected in.\n\nSet the value to -1 to select the first valid camera detected."), wxT("New camera number:"), wxT("MakerScanner - Change Camera"), cameraNum, -1, 10);
 
     long cameraNumNew;
 
-	if (dialog.ShowModal() == wxID_OK)
-	{
-		cameraNumNew = dialog.GetValue();
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        cameraNumNew = dialog.GetValue();
 
-		wxConfig *config = (wxConfig*)wxConfigBase::Get();
+        wxConfig *config = (wxConfig*)wxConfigBase::Get();
 
-		config->Write(wxT("CameraNum"), cameraNumNew);
+        config->Write(wxT("CameraNum"), cameraNumNew);
 
-		wxMessageBox(wxT("You must restart MakerScanner for your changes to take effect."),
+        wxMessageBox(wxT("You must restart MakerScanner for your changes to take effect."),
             wxT("MakerScanner - Settings Changed"));
-	}
+    }
 }
 
 void ActiveStereoFrame::UpdateFps(wxUpdateUIEvent &event)
 {
     wxDateTime now = wxDateTime::UNow();
 
-	wxTimeSpan timeDiff = now.Subtract(timeOfLastFpsUpdate);
+    wxTimeSpan timeDiff = now.Subtract(timeOfLastFpsUpdate);
 
-	if (timeDiff.GetMilliseconds() > 100)
-	{
-		// compute a new FPS
-		double timeDiffNum = timeDiff.GetMilliseconds().ToDouble() / 1000.0;
+    if (timeDiff.GetMilliseconds() > 100)
+    {
+        // compute a new FPS
+        double timeDiffNum = timeDiff.GetMilliseconds().ToDouble() / 1000.0;
 
-		double fps = framesSinceLastFpsUpdate / timeDiffNum;
+        double fps = framesSinceLastFpsUpdate / timeDiffNum;
 
-		framesSinceLastFpsUpdate = 0;
+        framesSinceLastFpsUpdate = 0;
 
-		timeOfLastFpsUpdate = now;
+        timeOfLastFpsUpdate = now;
 
-		wxString fpsString = wxString::Format(wxT("%4.1f"), fps);
+        wxString fpsString = wxString::Format(wxT("%4.1f"), fps);
 
-		lblFPS->SetLabel(fpsString);
+        lblFPS->SetLabel(fpsString);
 
         // disable things if the fps is too low
         if (fps < 0.5)
@@ -553,6 +553,6 @@ void ActiveStereoFrame::UpdateFps(wxUpdateUIEvent &event)
 
             butCapture->Enable(false);
         }
-	}
+    }
 
 }

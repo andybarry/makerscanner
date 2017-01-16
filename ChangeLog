@@ -1,3 +1,5 @@
+0.3.1 (Jan. 16, 2017): Fix wxWidgets errors.
+
 0.3.1 (Sept. 18 2010): Minor bug fix release.  Fixes a number of crashes and adds the ability to switch which camera is used.  Also now saves location of last scan for easier file-system navigation.
 
 0.3 (Summer 2010): Removed requirement for USB-based laser movement.  Added on-screen feedback for where the laser appears.  Substantially improved vibration and movement robustness.
